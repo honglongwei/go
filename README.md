@@ -9,7 +9,7 @@
 
 2. 创建安装路径,并解压  <br>
     mkdir -p /usr/local/go  <br>
-    tar -zxvf go1.6.1.linux-amd64.tar.gz -C /usr/local/go
+    tar -zxvf go1.6.1.linux-amd64.tar.gz -C /usr/local/
 
 3. 配置环境变量 <br>
    vi /etc/profile  <br>
