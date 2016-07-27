@@ -2,7 +2,6 @@
 ---
 
 * ### 配置Go运行环境 <br>
-* 
   (以centos6.5安装go1.6.1为例)
 
 1. 下载go安装包(http://www.golangtc.com/download)  <br>
