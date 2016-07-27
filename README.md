@@ -21,7 +21,7 @@
    src ---- 里面每一个子目录，就是一个包。包内是Go的源码文件  <br>
    pkg ---- 编译后生成的，包的目标文件   <br>
    bin ---- 生成的可执行文件。    <br>
-   mkdir -p /home/go/src && mkdir -p /home/go/pkg && mkdir -p /home/go/bin
+   mkdir -p /home/go/src && mkdir -p /home/go/pkg && mkdir -p /home/go/bin <br>
    ![Image](https://github.com/honglongwei/go/blob/master/images/2.jpg)
 
 5. 查看版本 <br>
