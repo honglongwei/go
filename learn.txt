@@ -1,0 +1,128 @@
+1、 Go支持内置的map类型。
+2、Go支持数组切片（Slice）。
+3、函数有多个返回值，
+func getName(){firstName,middleName,lastName,nickName string}{
+return "May", "M","Chen","Babe"
+}
+因为返回值都已经有名字，因此各个返回值也可以用如下方式来在不同的位置进行赋值，从
+而提供了极大的灵活性：
+func getName()(firstName, middleName, lastName, nickName string){
+firstName = "May"
+middleName = "M"
+lastName = "Chen"
+nickName = "Babe"
+return
+}
+并不是每一个返回值都必须赋值，没有被明确赋值的返回值将保持默认的空值。而函数的调
+用相比C/C++语言要简化很多：
+fn, mn, ln, nn := getName()
+如果开发者只对该函数其中的某几个返回值感兴趣的话，也可以直接用下划线作为占位符来
+忽略其他不关心的返回值。下面的调用表示调用者只希望接收lastName的值，这样可以避免声
+明完全没用的变量：
+_, _, lastName, _ := getName()
+
+4、Go有三个关键字用于标准的错误处理流程，分别为defer、panic、recover
+5、Go不支持继承和重载，而只是支持了基本的类型组合功能。
+6、Go语言引入了goroutine的概念，它使得并发编程变得非常简单。通过使用goroutine而不是用操作系统的并发机制，经及使用消息传递来共享内存而不是使用共享内存来通信，GO语言让并发编程变得更加轻盈和安全，通过使用关键字go,可以让函数以goroutine方法执行！goroutine是一种比线程更加轻盈、更省资源的协程。Go语言通过系统的线程来多路派遣这些函数的执行，使得每个Go关键字的执行函数可以运行成为一个单位协程。当一个协和阻塞时，调度器就会自动把其它协程安排到另外的线程中去执行，从而实现了程序无等待并行化的运行，而调度的开销非常小。
+7、Go语言实现 了CSP（通信顺序进程）模型作为goroutine间的推荐通信方式。在CSP模型中，一个并发系统由若干并行运行的顺序进程组成，每个进程不能对其它进程的变量赋值。
+8、一个进程内创建的所有goroutine运行在同一个内存地址空间中，因此如果不同的
+goroutine不得不去访问共享的内存变量，访问前应该先获取相应的读写锁。Go语言标准库中的sync包提供了完备的读写锁功能。
+9、Go语言的反射实现了反射的大部分功能，但没有像Java语言那样内置类型工厂，故而无法做到像Java那样通过类型字符串创建对象实例。
+10、Go语言的main()函数不能带参数，也不能定义返回值，命令行传入的参数在os.Args变量中保存。如果需要支持命令行开关，可使用flag包来做命令行参数规范的定义。
+11、Go函数的定义以关键字func开头，一个常规的函数定义包含以下部分：
+func 函数名(参数列表)(返回值列表) {
+// 函数体
+}
+对应的一个实例如下：
+func Compute(value1 int, value2 float64)(result float64, err error) {
+// 函数体
+}
+Go支持多个返回值，以上示例函数Compute()返回了两个值，一个叫result，另一个是err。并不是所有返回值都必须赋值。在函数返回时没有被明确赋值都会被置为默认值，比如result会被设为0.0，err会被设为nil。
+12、变量声明
+Go语言的变量声明方式与C和C++语言有明显不同。对于变量声明，Go语言引入了关键字var，而类型信息放在变量名之后，示例如下：
+Var v1 int
+Var v2 string 
+Var v3 [10] int //数组
+Var v4 [] int //数组切片
+Var v5 struct {
+f int
+}
+Var v6 *int //指针
+Var v7 map[string] int //map, key 为string 类型，value为int类型
+Var v8 func(a int) int
+变量声明语句不需要使用分号作为结束符。
+
+Var关键字的另一种用法 是可以将若干个需要声明的变量放置在一起，免得需要重复写var关键字，如下所示：
+Var (
+v1 int
+v2 string
+)
+
+13、变量初始化
+var v1 int = 10
+var v2 = 10
+v3 := 10 //编译器可以自动推导出v3的类型 
+Go支持多重赋值
+i, j = j, I
+
+14、常量定义
+通过const关键字，可以给字面常量指定一个友好的名字：
+const Pi float64 = 3.1415
+const zero = 0.0 //无类型浮点常量
+const {
+size int64 = 1024
+eof = -1 //无类型整型常量
+}
+
+Const u, v float32 = 0, 3 //u = 0.0, v = 3.0 常量的多重赋值
+Const a, b, c = 3, 4, "foo"
+Go的常量定义可以限定常量类型，但不是必需的。如果定义常量时没有指定类型，那么它与字面常量一样，是无类型的常量。
+
+15、预定义常量
+Go预定义了这些常量： true、false和iota。
+iota比较特殊，可以被认为是一个可以被编译器修改的常量，在每一个const关键字出现时被重置为0，然后在下一个const出现之前，每出现一次iota，其所代表的数字会自动增1。例如：
+Const ( // iota被重置为0
+c0 = iota // c0 == 0
+c1 = iota // c1 == 1
+c2 = iota // c2 == 2
+
+Const （
+a = 1 << iota // a == 1 , iota在每一个const开头被重设为0
+b = 1 << iota // b == 2
+c = 1 << iota // c == 4
+）
+如果两个const的赋值语句的表达式是一样的，那么可以省略后一个赋值表达式。因此，上面的前两个const语句可简写成：
+const ( // iota被重设为0
+c0 = iota // c0 == 0
+c1 // c1 == 1
+c2 // c2 == 2
+)
+
+
+16、 int和int32在Go语言里被认为是两种不同的类型，编译器不会做自动类型转换。
+var value2 int32
+value1 := 64 // value1将会被自动推导为int类型
+value2 = value1 //编译错误
+
+17、 两个不同类型的整型数不能直接比较，比如int8类型的数和int类型的数不能直接比较，但是各种类型的整型变量都可以直接与字面常量进行比较，比如：
+var i int32
+var j int64
+i, j = 1, 2
+if i == j { // 编译错误
+fmt.Println("i and j are equal.")
+}
+if i == 1 || j == 2 { // 编译通过
+fmt.Println("i and j are equal.")
+}
+
+18、 Go语言定义了两个类型float32和float64，其中float32等价于C语言的float类型，float64等价于C语言的double类型。
+fvalue2 := 12.0 //fvalue2将被自动推导为float64
+浮点数不能用==来判断是否相等，必须通过以下方式进行 ：
+import "math"
+// p为用户自定义的比较精度，比如0.00001
+func IsEqual(f1, f2, p float64) bool {
+return math.Fdim(f1, f2) < p
+}
+
+19、不要通过 共享内存来通信，而应该通过 通信来共享内存。
+20、channel是go语言在语言级提供的goroutine间的通信方式。可以使用channel在两个或多个goroutine之间传递消息。channel是进程内的通信方式，因此通过channel传递对象的过程和调用函数时的参数传递行为比较一致，比如可以传递指针。
